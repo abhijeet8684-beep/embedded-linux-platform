@@ -1,0 +1,25 @@
+name: embedded-lab-ci
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  host-tests:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Build ring buffer unit test
+        run: gcc -std=c11 -Wall -Wextra -O2 meta-embedded-lab/tests/unit/edu_ring_test.c -o /tmp/edu_ring_test
+
+      - name: Run ring buffer unit test
+        run: /tmp/edu_ring_test
+
+      - name: Build user-space CLI
+        run: make -C meta-embedded-lab/userspace/edu-cli
+
+      - name: Run CLI smoke test
+        run: ./meta-embedded-lab/userspace/edu-cli/edu-cli --help

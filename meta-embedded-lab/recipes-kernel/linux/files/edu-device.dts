@@ -1,0 +1,25 @@
+/dts-v1/;
+
+/plugin/;
+
+#include <dt-bindings/interrupt-controller/irq.h>
+
+/ {
+	compatible = "edu,virtual-device";
+
+	fragment@0 {
+		target-path = "/";
+		__overlay__ {
+			edu_device: edu-device@0 {
+				compatible = "edu,device-v1";
+				reg = <0x0 0x1000 0x0 0x1000>;
+				interrupts = <0 12 IRQ_TYPE_LEVEL_HIGH>;
+				interrupt-parent = <&gic>;
+				status = "okay";
+				fifo-depth = <128>;
+				version = <1>;
+				label = "edu0";
+			};
+		};
+	};
+};

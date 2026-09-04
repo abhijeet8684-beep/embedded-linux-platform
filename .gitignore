@@ -1,0 +1,53 @@
+# Yocto and BitBake build output
+build/
+tmp/
+downloads/
+sstate-cache/
+cache/
+*.sig
+*.sigdata
+*.siginfo
+*.done
+*.stamp
+
+# Linux kernel and module build output
+*.o
+*.ko
+*.mod
+*.mod.c
+*.cmd
+Module.symvers
+modules.order
+
+# C/C++ build output
+*.a
+*.so
+*.exe
+*.d
+*.gcda
+*.gcno
+*.gcov
+userspace/edu-cli/edu-cli
+meta-embedded-lab/userspace/edu-cli/edu-cli
+tests/unit/edu_ring_test
+tests/unit/edu_ring_test.exe
+
+# Logs and temporary files
+*.log
+*.tmp
+*.swp
+*.swo
+*~
+.cache/
+
+# QEMU runtime artifacts
+*.pid
+*.qcow2
+*.raw
+*.wic
+*.img
+
+# Editors and local environment
+.vscode/
+.idea/
+compile_commands.json
