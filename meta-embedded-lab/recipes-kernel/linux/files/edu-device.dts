@@ -2,18 +2,19 @@
 
 /plugin/;
 
+#include <dt-bindings/interrupt-controller/arm-gic.h>
 #include <dt-bindings/interrupt-controller/irq.h>
 
 / {
-	compatible = "edu,virtual-device";
+	compatible = "qemu,virt";
 
 	fragment@0 {
 		target-path = "/";
 		__overlay__ {
-			edu_device: edu-device@0 {
+			edu_device: edu-device@20000000 {
 				compatible = "edu,device-v1";
-				reg = <0x0 0x1000 0x0 0x1000>;
-				interrupts = <0 12 IRQ_TYPE_LEVEL_HIGH>;
+				reg = <0x0 0x20000000 0x0 0x1000>;
+				interrupts = <GIC_SPI 12 IRQ_TYPE_LEVEL_HIGH>;
 				interrupt-parent = <&gic>;
 				status = "okay";
 				fifo-depth = <128>;

@@ -2,6 +2,7 @@
 #include <linux/device.h>
 #include <linux/fs.h>
 #include <linux/interrupt.h>
+#include <linux/io.h>
 #include <linux/module.h>
 #include <linux/of.h>
 #include <linux/of_irq.h>
@@ -12,6 +13,8 @@
 
 #include "edu_device.h"
 #include "edu_ioctl.h"
+
+struct edu_device *g_dev;
 
 static const struct of_device_id edu_of_match[] = {
 	{ .compatible = "edu,device-v1" },
@@ -35,7 +38,7 @@ static int edu_register_chrdev(struct edu_device *edu)
 		return ret;
 	}
 
-	edu->class = class_create(THIS_MODULE, EDU_NAME);
+	edu->class = class_create(EDU_NAME);
 	if (IS_ERR(edu->class)) {
 		ret = PTR_ERR(edu->class);
 		cdev_del(&edu->cdev);
@@ -78,6 +81,8 @@ static int edu_probe(struct platform_device *pdev)
 	g_dev = edu;
 	edu->pdev = pdev;
 	edu->dev = &pdev->dev;
+	edu->regs = NULL;
+	edu->reg_size = 0;
 	edu->version = 1;
 	edu->control = 0;
 	edu->status = 0x1;
@@ -89,6 +94,12 @@ static int edu_probe(struct platform_device *pdev)
 	mutex_init(&edu->mutex);
 	init_waitqueue_head(&edu->wq);
 	INIT_WORK(&edu->irq_work, edu_irq_work);
+
+	ret = edu_mmio_init(edu, pdev);
+	if (ret) {
+		dev_err(edu->dev, "EDU MMIO init failed: %d\n", ret);
+		return ret;
+	}
 
 	ret = edu_register_chrdev(edu);
 	if (ret)

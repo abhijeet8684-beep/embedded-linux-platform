@@ -23,9 +23,9 @@ int edu_debugfs_create(struct edu_device *edu)
 	if (IS_ERR(edu->debug_root))
 		return PTR_ERR(edu->debug_root);
 
-	edu->irq_count = debugfs_create_u32("irq_count", 0444, edu->debug_root, &edu->irq_status);
-	edu->fault_inject = debugfs_create_bool("fault_inject", 0644, edu->debug_root, &edu->fault_active);
-	edu->fifo_level_entry = debugfs_create_u32("fifo_level", 0444, edu->debug_root, &edu->fifo_level);
+	debugfs_create_u32("irq_count", 0444, edu->debug_root, &edu->irq_status);
+	debugfs_create_bool("fault_inject", 0644, edu->debug_root, &edu->fault_active);
+	debugfs_create_u32("fifo_level", 0444, edu->debug_root, &edu->fifo_level);
 	return 0;
 }
 

@@ -43,7 +43,8 @@ int edu_irq_request(struct edu_device *edu, struct platform_device *pdev)
 	if (irq < 0)
 		return irq;
 
-	if (request_irq(irq, edu_irq_handler, IRQF_SHARED, EDU_NAME, edu))
+	if (devm_request_irq(&pdev->dev, irq, edu_irq_handler, IRQF_SHARED,
+			     EDU_NAME, edu))
 		return -EBUSY;
 
 	return 0;
@@ -54,5 +55,7 @@ void edu_irq_free(struct edu_device *edu)
 	if (!edu || !edu->pdev)
 		return;
 
-	free_irq(platform_get_irq(edu->pdev, 0), edu);
+	/* The IRQ is registered with devm_request_irq() and is released by the
+	 * device framework when the platform device is removed.
+	 */
 }

@@ -1,0 +1,13 @@
+* text=auto eol=lf
+
+*.bin binary
+*.dtb binary
+*.ext4 binary
+*.gz binary
+*.img binary
+*.rpm binary
+*.tar binary
+*.tar.* binary
+*.wic binary
+*.xz binary
+*.zst binary

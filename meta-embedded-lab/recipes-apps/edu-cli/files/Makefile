@@ -6,7 +6,7 @@ TARGET = edu-cli
 all: $(TARGET)
 
 $(TARGET): edu-cli.c
-	$(CC) $(CFLAGS) -o $@ $<
+	$(CC) $(CFLAGS) $(LDFLAGS) -o $@ $<
 
 clean:
 	rm -f $(TARGET)

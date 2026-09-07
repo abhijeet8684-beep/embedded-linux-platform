@@ -4,6 +4,8 @@
 #include <linux/cdev.h>
 #include <linux/device.h>
 #include <linux/fs.h>
+#include <linux/io.h>
+#include <linux/pm.h>
 #include <linux/mutex.h>
 #include <linux/platform_device.h>
 #include <linux/spinlock.h>
@@ -28,6 +30,8 @@ struct edu_device {
 	struct dentry *irq_count;
 	struct dentry *fault_inject;
 	struct dentry *fifo_level_entry;
+	void __iomem *regs;
+	resource_size_t reg_size;
 	bool irq_enabled;
 	bool fault_active;
 	u32 version;
@@ -45,12 +49,17 @@ struct edu_device {
 
 extern struct edu_device *g_dev;
 extern const struct file_operations edu_fops;
+extern const struct dev_pm_ops edu_pm_ops;
 
 int edu_fifo_init(struct edu_device *edu);
 void edu_fifo_reset(struct edu_device *edu);
 int edu_fifo_push(struct edu_device *edu, u32 value);
 u32 edu_fifo_pop(struct edu_device *edu);
 int edu_fifo_level(struct edu_device *edu);
+
+int edu_mmio_init(struct edu_device *edu, struct platform_device *pdev);
+u32 edu_reg_read32(struct edu_device *edu, u32 offset);
+void edu_reg_write32(struct edu_device *edu, u32 offset, u32 value);
 
 void edu_irq_work(struct work_struct *work);
 int edu_irq_request(struct edu_device *edu, struct platform_device *pdev);

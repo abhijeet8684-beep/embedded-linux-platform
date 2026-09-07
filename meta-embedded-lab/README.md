@@ -13,7 +13,7 @@ This Yocto layer implements a portfolio-grade embedded Linux platform for a simu
 ## Structure
 
 - `conf/layer.conf`: Yocto layer metadata.
-- `drivers/edu-device`: Linux kernel driver implementation as a virtual hardware abstraction.
+- `recipes-drivers/edu-device/files`: Linux kernel driver implementation as a virtual hardware abstraction.
 - `userspace/edu-cli`: Command-line userspace test and diagnostic tool.
 - `recipes-kernel/linux`: Kernel appends and device tree fragments.
 - `recipes-drivers/edu-device`: Out-of-tree kernel module recipe.
