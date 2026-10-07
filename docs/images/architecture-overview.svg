@@ -1,0 +1,116 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 920 620" width="100%" height="100%">
+  <defs>
+    <style>
+      .title { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif; font-size: 18px; font-weight: 700; fill: #24292f; }
+      .subtitle { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif; font-size: 12px; fill: #57606a; }
+      .box-title { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif; font-size: 14px; font-weight: 600; }
+      .box-desc { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif; font-size: 11px; fill: #57606a; }
+      .badge-impl { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif; font-size: 10px; font-weight: 700; fill: #1a7f37; }
+      .badge-plan { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif; font-size: 10px; font-weight: 700; fill: #9a6700; }
+      .edge-label { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif; font-size: 11px; font-weight: 500; fill: #0969da; }
+    </style>
+    <marker id="arrow-blue" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#0969da" />
+    </marker>
+    <marker id="arrow-gray" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#8c959f" />
+    </marker>
+    <marker id="arrow-amber" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#bf8700" />
+    </marker>
+    <filter id="card-shadow" x="-2%" y="-4%" width="104%" height="108%">
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-opacity="0.06" />
+    </filter>
+  </defs>
+
+  <rect width="100%" height="100%" fill="#f6f8fa" rx="8" />
+
+  <text x="40" y="42" class="title">Embedded Linux Platform Architecture</text>
+  <text x="40" y="62" class="subtitle">End-to-End System Integration: Userspace to Hardware Model</text>
+
+  <g transform="translate(560, 28)">
+    <rect x="0" y="0" width="320" height="36" rx="6" fill="#ffffff" stroke="#d0d7de" />
+    <circle cx="18" cy="18" r="6" fill="#2da44e" />
+    <text x="30" y="22" font-family="sans-serif" font-size="11px" fill="#24292f">Implemented</text>
+    <circle cx="120" cy="18" r="6" fill="#bf8700" />
+    <text x="132" y="22" font-family="sans-serif" font-size="11px" fill="#24292f">Prepared / Partial</text>
+    <circle cx="230" cy="18" r="6" fill="#8c959f" />
+    <text x="242" y="22" font-family="sans-serif" font-size="11px" fill="#24292f">Planned / Target</text>
+  </g>
+
+  <!-- USERSPACE -->
+  <rect x="40" y="90" width="840" height="95" rx="8" fill="#ffffff" stroke="#2da44e" stroke-width="1.5" filter="url(#card-shadow)" />
+  <rect x="52" y="102" width="95" height="20" rx="4" fill="#dafbe1" />
+  <text x="60" y="116" class="badge-impl">IMPLEMENTED</text>
+  <text x="160" y="117" class="box-title" fill="#1a7f37">Userspace Diagnostics (edu-cli &amp; POSIX ABI)</text>
+  <text x="52" y="145" class="box-desc">&#x2022; Diagnostic CLI utility: reset, status, write &lt;val&gt;, read, fault &lt;code&gt;</text>
+  <text x="52" y="163" class="box-desc">&#x2022; Interacts via open(), read(), write(), ioctl() on character device node</text>
+  <rect x="700" y="112" width="160" height="52" rx="6" fill="#f6f8fa" stroke="#d0d7de" />
+  <text x="780" y="135" text-anchor="middle" font-family="monospace" font-size="13px" font-weight="bold" fill="#0969da">/dev/edu0</text>
+  <text x="780" y="152" text-anchor="middle" font-family="sans-serif" font-size="10px" fill="#57606a">Character Device Node</text>
+
+  <line x1="780" y1="185" x2="780" y2="220" stroke="#0969da" stroke-width="2" marker-end="url(#arrow-blue)" />
+  <text x="655" y="208" class="edge-label">read / write / ioctl</text>
+
+  <!-- KERNEL DRIVER -->
+  <rect x="40" y="225" width="840" height="135" rx="8" fill="#ffffff" stroke="#2da44e" stroke-width="1.5" filter="url(#card-shadow)" />
+  <rect x="52" y="237" width="95" height="20" rx="4" fill="#dafbe1" />
+  <text x="60" y="251" class="badge-impl">IMPLEMENTED</text>
+  <text x="160" y="252" class="box-title" fill="#1a7f37">Linux Platform Driver (edu-device kernel module)</text>
+
+  <g transform="translate(52, 272)">
+    <rect x="0" y="0" width="180" height="72" rx="6" fill="#f6f8fa" stroke="#d0d7de" />
+    <text x="12" y="22" font-family="sans-serif" font-size="12px" font-weight="600" fill="#24292f">Char Dev Interface</text>
+    <text x="12" y="42" font-family="sans-serif" font-size="10px" fill="#57606a">cdev, file_operations</text>
+    <text x="12" y="58" font-family="sans-serif" font-size="10px" fill="#57606a">ioctl, poll, sysfs/debugfs</text>
+  </g>
+  <g transform="translate(246, 272)">
+    <rect x="0" y="0" width="180" height="72" rx="6" fill="#f6f8fa" stroke="#d0d7de" />
+    <text x="12" y="22" font-family="sans-serif" font-size="12px" font-weight="600" fill="#24292f">Driver State &amp; FIFO</text>
+    <text x="12" y="42" font-family="sans-serif" font-size="10px" fill="#57606a">Software Ring-Buffer</text>
+    <text x="12" y="58" font-family="sans-serif" font-size="10px" fill="#57606a">Spinlocks &amp; Mutexes</text>
+  </g>
+  <g transform="translate(440, 272)">
+    <rect x="0" y="0" width="180" height="72" rx="6" fill="#f6f8fa" stroke="#d0d7de" />
+    <text x="12" y="22" font-family="sans-serif" font-size="12px" font-weight="600" fill="#24292f">Interrupt Framework</text>
+    <text x="12" y="42" font-family="sans-serif" font-size="10px" fill="#57606a">Top-half ISR (request_irq)</text>
+    <text x="12" y="58" font-family="sans-serif" font-size="10px" fill="#57606a">Bottom-half workqueue</text>
+  </g>
+  <g transform="translate(634, 272)">
+    <rect x="0" y="0" width="180" height="72" rx="6" fill="#fff8c5" stroke="#bf8700" />
+    <text x="12" y="22" font-family="sans-serif" font-size="12px" font-weight="600" fill="#7d4e00">MMIO Access (Partial)</text>
+    <text x="12" y="42" font-family="sans-serif" font-size="10px" fill="#57606a">ioremap_resource mapped</text>
+    <text x="12" y="58" font-family="sans-serif" font-size="10px" fill="#bf8700">&#x26A0; Hardware access in dev</text>
+  </g>
+
+  <line x1="230" y1="360" x2="230" y2="395" stroke="#bf8700" stroke-width="2" marker-end="url(#arrow-amber)" />
+  <text x="95" y="382" class="edge-label" fill="#bf8700">DT Probe / Match</text>
+
+  <line x1="724" y1="360" x2="724" y2="475" stroke="#8c959f" stroke-dasharray="4 4" stroke-width="2" marker-end="url(#arrow-gray)" />
+  <text x="734" y="425" class="edge-label" fill="#57606a">MMIO Access (Planned)</text>
+
+  <!-- DEVICE TREE -->
+  <rect x="40" y="395" width="400" height="65" rx="8" fill="#ffffff" stroke="#bf8700" stroke-width="1.5" filter="url(#card-shadow)" />
+  <rect x="52" y="405" width="80" height="18" rx="4" fill="#fff8c5" />
+  <text x="58" y="418" class="badge-plan">PREPARED</text>
+  <text x="142" y="419" class="box-title" fill="#7d4e00">Device Tree Fragment</text>
+  <text x="52" y="443" class="box-desc">compatible = "edu,device-v1", reg = &lt;0x20000000 0x1000&gt;, IRQ SPI 12</text>
+
+  <!-- HARDWARE / QEMU -->
+  <rect x="40" y="480" width="840" height="115" rx="8" fill="#ffffff" stroke="#8c959f" stroke-width="1.5" filter="url(#card-shadow)" />
+  <rect x="52" y="492" width="75" height="20" rx="4" fill="#eaeef2" />
+  <text x="60" y="506" font-family="sans-serif" font-size="10px" font-weight="bold" fill="#57606a">PLANNED</text>
+  <text x="137" y="507" class="box-title" fill="#24292f">QEMU v8.2.7 ARM64 Virtual Platform</text>
+
+  <g transform="translate(52, 524)">
+    <rect x="0" y="0" width="360" height="56" rx="6" fill="#f6f8fa" stroke="#d0d7de" />
+    <text x="12" y="22" font-family="sans-serif" font-size="12px" font-weight="600" fill="#24292f">ARM64 virt Machine (Upstream QEMU)</text>
+    <text x="12" y="42" font-family="sans-serif" font-size="11px" fill="#1a7f37">&#x2713; Validated runtime environment (Cortex-A53, GICv2, VirtIO)</text>
+  </g>
+
+  <g transform="translate(432, 524)">
+    <rect x="0" y="0" width="435" height="56" rx="6" fill="#f6f8fa" stroke="#8c959f" stroke-dasharray="4 4" />
+    <text x="12" y="22" font-family="sans-serif" font-size="12px" font-weight="600" fill="#57606a">EDU Hardware Model (Target Contract)</text>
+    <text x="12" y="42" font-family="sans-serif" font-size="11px" fill="#8c959f">&#x23F3; MMIO at 0x20000000, 128-word FIFO, GIC SPI 12 IRQ line</text>
+  </g>
+</svg>

@@ -1,0 +1,87 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 500" width="100%" height="100%">
+  <defs>
+    <style>
+      .title { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif; font-size: 18px; font-weight: 700; fill: #24292f; }
+      .subtitle { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif; font-size: 12px; fill: #57606a; }
+      .box-title { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif; font-size: 13px; font-weight: 600; fill: #24292f; }
+      .code-text { font-family: SFMono-Regular, Consolas, 'Liberation Mono', Menlo, monospace; font-size: 11px; fill: #24292f; }
+      .comment-text { font-family: SFMono-Regular, Consolas, monospace; font-size: 10px; fill: #57606a; font-style: italic; }
+      .badge-plan { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif; font-size: 9px; font-weight: 700; fill: #9a6700; }
+      .badge-impl { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif; font-size: 9px; font-weight: 700; fill: #1a7f37; }
+    </style>
+    <marker id="arrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#0969da" />
+    </marker>
+    <filter id="shadow" x="-2%" y="-3%" width="104%" height="106%">
+      <feDropShadow dx="0" dy="2" stdDeviation="2" flood-opacity="0.05" />
+    </filter>
+  </defs>
+
+  <rect width="100%" height="100%" fill="#f6f8fa" rx="8" />
+
+  <text x="36" y="38" class="title">Device Tree Binding &amp; Driver Probe Matching</text>
+  <text x="36" y="56" class="subtitle">Hardware Description to Linux Kernel Resource Resolution Flow</text>
+
+  <!-- Left Card: Device Tree Node Source -->
+  <g transform="translate(36, 80)" filter="url(#shadow)">
+    <rect width="380" height="380" rx="6" fill="#ffffff" stroke="#bf8700" stroke-width="1.2" />
+    <rect x="14" y="12" width="75" height="18" rx="3" fill="#fff8c5" />
+    <text x="20" y="25" class="badge-plan">PREPARED</text>
+    <text x="100" y="26" class="box-title" fill="#7d4e00">edu-device.dts (Device Tree Fragment)</text>
+
+    <!-- DTS Code Box -->
+    <rect x="14" y="44" width="352" height="320" rx="4" fill="#f6f8fa" stroke="#d0d7de" />
+    <g transform="translate(24, 64)">
+      <text y="0" class="code-text"><tspan fill="#cf222e">/dts-v1/;</tspan></text>
+      <text y="16" class="code-text"><tspan fill="#cf222e">/plugin/;</tspan></text>
+      <text y="32" class="comment-text">/* ARM64 virt machine overlay */</text>
+      <text y="48" class="code-text">fragment@0 {</text>
+      <text y="64" class="code-text">  target-path = "/";</text>
+      <text y="80" class="code-text">  __overlay__ {</text>
+      <text y="96" class="code-text" font-weight="bold" fill="#0550ae">    edu_device: edu-device@20000000 {</text>
+      <text y="112" class="code-text" fill="#116329">      compatible = "edu,device-v1";</text>
+      <text y="128" class="code-text">      reg = &lt;0x0 0x20000000 0x0 0x1000&gt;;</text>
+      <text y="144" class="code-text">      interrupt-parent = &lt;&amp;gic&gt;;</text>
+      <text y="160" class="code-text">      interrupts = &lt;GIC_SPI 12 4&gt;;</text>
+      <text y="176" class="code-text">      status = "okay";</text>
+      <text y="192" class="code-text">      fifo-depth = &lt;128&gt;;</text>
+      <text y="208" class="code-text">      version = &lt;1&gt;;</text>
+      <text y="224" class="code-text">      label = "edu0";</text>
+      <text y="240" class="code-text" font-weight="bold" fill="#0550ae">    };</text>
+      <text y="256" class="code-text">  };</text>
+      <text y="272" class="code-text">};</text>
+    </g>
+  </g>
+
+  <!-- Center Arrow connecting matching properties -->
+  <path d="M 426 210 L 464 210" stroke="#0969da" stroke-width="2" marker-end="url(#arrow)" />
+  <text x="430" y="200" font-family="sans-serif" font-size="10px" font-weight="600" fill="#0969da">MATCH</text>
+
+  <!-- Right Card: Linux Platform Driver Matching -->
+  <g transform="translate(474, 80)" filter="url(#shadow)">
+    <rect width="370" height="380" rx="6" fill="#ffffff" stroke="#2da44e" stroke-width="1.2" />
+    <rect x="14" y="12" width="90" height="18" rx="3" fill="#dafbe1" />
+    <text x="20" y="25" class="badge-impl">IMPLEMENTED</text>
+    <text x="114" y="26" class="box-title" fill="#1a7f37">edu_main.c (Kernel Driver Binding)</text>
+
+    <!-- C Code Box -->
+    <rect x="14" y="44" width="342" height="320" rx="4" fill="#f6f8fa" stroke="#d0d7de" />
+    <g transform="translate(24, 64)">
+      <text y="0" class="comment-text">/* Device Tree OF match table */</text>
+      <text y="16" class="code-text">static const struct of_device_id</text>
+      <text y="32" class="code-text">edu_of_match[] = {</text>
+      <text y="48" class="code-text" fill="#116329">  { .compatible = "edu,device-v1" },</text>
+      <text y="64" class="code-text">  { /* sentinel */ }</text>
+      <text y="80" class="code-text">};</text>
+      <text y="104" class="comment-text">/* Resource Extraction in probe() */</text>
+      <text y="120" class="code-text">res = platform_get_resource(</text>
+      <text y="136" class="code-text">        pdev, IORESOURCE_MEM, 0);</text>
+      <text y="152" class="code-text">regs = devm_ioremap_resource(</text>
+      <text y="168" class="code-text">        &amp;pdev-&gt;dev, res);</text>
+      <text y="192" class="code-text">irq = platform_get_irq(pdev, 0);</text>
+      <text y="208" class="code-text">request_irq(irq, edu_isr, ...);</text>
+      <text y="232" class="comment-text">/* Note: prepared DT fragment is not */</text>
+      <text y="248" class="comment-text">/* yet injected into standard QEMU virt */</text>
+    </g>
+  </g>
+</svg>

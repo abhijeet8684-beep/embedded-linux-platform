@@ -1,0 +1,117 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 500" width="100%" height="100%">
+  <defs>
+    <style>
+      .title { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif; font-size: 18px; font-weight: 700; fill: #24292f; }
+      .subtitle { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif; font-size: 12px; fill: #57606a; }
+      .step-title { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif; font-size: 13px; font-weight: 600; fill: #24292f; }
+      .step-sub { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif; font-size: 11px; fill: #57606a; }
+      .badge-impl { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif; font-size: 9px; font-weight: 700; fill: #1a7f37; }
+      .badge-plan { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif; font-size: 9px; font-weight: 700; fill: #9a6700; }
+    </style>
+    <marker id="arrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#0969da" />
+    </marker>
+    <filter id="shadow" x="-2%" y="-3%" width="104%" height="106%">
+      <feDropShadow dx="0" dy="2" stdDeviation="2" flood-opacity="0.05" />
+    </filter>
+  </defs>
+
+  <rect width="100%" height="100%" fill="#f6f8fa" rx="8" />
+
+  <text x="36" y="38" class="title">System Boot &amp; Integration Sequence</text>
+  <text x="36" y="56" class="subtitle">From Yocto Artifact Assembly to Driver Initialization and Userspace Readiness</text>
+
+  <!-- Flow Steps: 5 stages horizontally and vertically -->
+  <!-- 1. Yocto Build -->
+  <g transform="translate(36, 85)" filter="url(#shadow)">
+    <rect width="150" height="150" rx="6" fill="#ffffff" stroke="#2da44e" stroke-width="1.2" />
+    <rect x="10" y="10" width="75" height="18" rx="3" fill="#dafbe1" />
+    <text x="16" y="23" class="badge-impl">VALIDATED</text>
+    <text x="10" y="48" class="step-title">1. Yocto Build</text>
+    <text x="10" y="68" class="step-sub">&#x2022; Poky / BitBake</text>
+    <text x="10" y="84" class="step-sub">&#x2022; meta-embedded-lab</text>
+    <text x="10" y="100" class="step-sub">&#x2022; Kernel 6.6 Image</text>
+    <text x="10" y="116" class="step-sub">&#x2022; rootfs &amp; DTB</text>
+    <text x="10" y="132" class="step-sub">&#x2022; edu-device module</text>
+  </g>
+
+  <!-- Arrow 1 -> 2 -->
+  <path d="M 186 160 L 214 160" stroke="#0969da" stroke-width="2" marker-end="url(#arrow)" />
+
+  <!-- 2. QEMU Launch -->
+  <g transform="translate(220, 85)" filter="url(#shadow)">
+    <rect width="150" height="150" rx="6" fill="#ffffff" stroke="#2da44e" stroke-width="1.2" />
+    <rect x="10" y="10" width="75" height="18" rx="3" fill="#dafbe1" />
+    <text x="16" y="23" class="badge-impl">VALIDATED</text>
+    <text x="10" y="48" class="step-title">2. QEMU Launch</text>
+    <text x="10" y="68" class="step-sub">&#x2022; qemu-system-aarch64</text>
+    <text x="10" y="84" class="step-sub">&#x2022; -M virt -cpu cortex-a53</text>
+    <text x="10" y="100" class="step-sub">&#x2022; GICv2 interrupt ctrl</text>
+    <text x="10" y="116" class="step-sub">&#x2022; Serial console output</text>
+    <text x="10" y="132" class="step-sub">&#x2022; VirtIO disk backend</text>
+  </g>
+
+  <!-- Arrow 2 -> 3 -->
+  <path d="M 370 160 L 398 160" stroke="#0969da" stroke-width="2" marker-end="url(#arrow)" />
+
+  <!-- 3. Kernel Boot -->
+  <g transform="translate(404, 85)" filter="url(#shadow)">
+    <rect width="150" height="150" rx="6" fill="#ffffff" stroke="#2da44e" stroke-width="1.2" />
+    <rect x="10" y="10" width="75" height="18" rx="3" fill="#dafbe1" />
+    <text x="16" y="23" class="badge-impl">VALIDATED</text>
+    <text x="10" y="48" class="step-title">3. Kernel Boot</text>
+    <text x="10" y="68" class="step-sub">&#x2022; ARM64 Linux 6.6</text>
+    <text x="10" y="84" class="step-sub">&#x2022; Device Tree parse</text>
+    <text x="10" y="100" class="step-sub">&#x2022; Memory init</text>
+    <text x="10" y="116" class="step-sub">&#x2022; Platform bus populates</text>
+    <text x="10" y="132" class="step-sub">&#x2022; Rootfs mounted</text>
+  </g>
+
+  <!-- Arrow 3 -> 4 -->
+  <path d="M 554 160 L 582 160" stroke="#0969da" stroke-width="2" marker-end="url(#arrow)" />
+
+  <!-- 4. Driver Probe -->
+  <g transform="translate(588, 85)" filter="url(#shadow)">
+    <rect width="150" height="150" rx="6" fill="#ffffff" stroke="#bf8700" stroke-width="1.2" />
+    <rect x="10" y="10" width="75" height="18" rx="3" fill="#fff8c5" />
+    <text x="16" y="23" class="badge-plan">PARTIAL</text>
+    <text x="10" y="48" class="step-title" fill="#7d4e00">4. Driver Probe</text>
+    <text x="10" y="68" class="step-sub">&#x2022; module load / match</text>
+    <text x="10" y="84" class="step-sub">&#x2022; edu_probe() runs</text>
+    <text x="10" y="100" class="step-sub">&#x2022; alloc_chrdev_region</text>
+    <text x="10" y="116" class="step-sub">&#x2022; /dev/edu0 created</text>
+    <text x="10" y="132" class="step-sub" fill="#bf8700">&#x26A0; HW probe planned</text>
+  </g>
+
+  <!-- Arrow 4 -> 5 -->
+  <path d="M 738 160 L 766 160" stroke="#0969da" stroke-width="2" marker-end="url(#arrow)" />
+
+  <!-- 5. Userspace Ready -->
+  <g transform="translate(772, 85)" filter="url(#shadow)">
+    <rect width="92" height="150" rx="6" fill="#ffffff" stroke="#2da44e" stroke-width="1.2" />
+    <rect x="8" y="10" width="76" height="18" rx="3" fill="#dafbe1" />
+    <text x="14" y="23" class="badge-impl">READY</text>
+    <text x="8" y="48" class="step-title">5. Userspace</text>
+    <text x="8" y="68" class="step-sub">&#x2022; /dev/edu0</text>
+    <text x="8" y="84" class="step-sub">&#x2022; sysfs node</text>
+    <text x="8" y="100" class="step-sub">&#x2022; debugfs</text>
+    <text x="8" y="116" class="step-sub">&#x2022; edu-cli</text>
+    <text x="8" y="132" class="step-sub">&#x2022; shell test</text>
+  </g>
+
+  <!-- Detailed notes footer -->
+  <g transform="translate(36, 265)" filter="url(#shadow)">
+    <rect width="828" height="200" rx="6" fill="#ffffff" stroke="#d0d7de" />
+    <text x="20" y="30" font-family="sans-serif" font-size="13px" font-weight="700" fill="#24292f">Runtime Integration Status &amp; Execution Environment Notes</text>
+
+    <text x="20" y="58" class="step-sub" font-weight="600" fill="#1a7f37">&#x2713; Environment &amp; Toolchain:</text>
+    <text x="36" y="74" class="step-sub">Yocto Poky builds a bootable ARM64 image with Linux kernel 6.6, generating standard ext4 rootfs, dtb, and Image binaries.</text>
+
+    <text x="20" y="102" class="step-sub" font-weight="600" fill="#1a7f37">&#x2713; Driver Framework Readiness:</text>
+    <text x="36" y="118" class="step-sub">The platform driver module builds out-of-tree via BitBake recipe, exposes character device /dev/edu0, and registers interrupt and sysfs interfaces.</text>
+
+    <text x="20" y="146" class="step-sub" font-weight="600" fill="#bf8700">&#x26A0; Hardware Emulation Boundary (Planned Phase):</text>
+    <text x="36" y="162" class="step-sub">QEMU is currently built from upstream v8.2.7. The EDU virtual peripheral is described in the DT fragment and specification, but not instantiated in the default virt machine.</text>
+    <text x="36" y="178" class="step-sub">Full hardware MMIO read/write and QEMU interrupt generation will be achieved upon integrating the EDU device model into the QEMU machine.</text>
+  </g>
+</svg>

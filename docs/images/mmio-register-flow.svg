@@ -1,0 +1,125 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 480" width="100%" height="100%">
+  <defs>
+    <style>
+      .title { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif; font-size: 18px; font-weight: 700; fill: #24292f; }
+      .subtitle { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif; font-size: 12px; fill: #57606a; }
+      .box-title { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif; font-size: 13px; font-weight: 600; }
+      .box-sub { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif; font-size: 11px; fill: #57606a; }
+      .step-num { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif; font-size: 12px; font-weight: 700; fill: #ffffff; }
+      .flow-arrow { stroke: #0969da; stroke-width: 2; fill: none; }
+      .flow-arrow-plan { stroke: #8c959f; stroke-width: 2; stroke-dasharray: 4 4; fill: none; }
+    </style>
+    <marker id="arrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#0969da" />
+    </marker>
+    <marker id="arrow-gray" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#8c959f" />
+    </marker>
+    <filter id="card-shadow" x="-2%" y="-3%" width="104%" height="106%">
+      <feDropShadow dx="0" dy="2" stdDeviation="2" flood-opacity="0.05" />
+    </filter>
+  </defs>
+
+  <rect width="100%" height="100%" fill="#f6f8fa" rx="8" />
+
+  <text x="36" y="38" class="title">MMIO Register Access Architecture</text>
+  <text x="36" y="56" class="subtitle">Complete Register Transaction Flow from Userspace Request to Hardware Target</text>
+
+  <!-- Step 1: Userspace -->
+  <g transform="translate(36, 85)" filter="url(#card-shadow)">
+    <rect width="230" height="100" rx="6" fill="#ffffff" stroke="#2da44e" stroke-width="1.2" />
+    <circle cx="24" cy="24" r="12" fill="#2da44e" />
+    <text x="24" y="28" text-anchor="middle" class="step-num">1</text>
+    <text x="44" y="28" class="box-title" fill="#1a7f37">Userspace Access</text>
+    <text x="14" y="54" class="box-sub">edu-cli write / read / ioctl</text>
+    <text x="14" y="70" class="box-sub">Standard C library POSIX calls</text>
+    <text x="14" y="86" class="box-sub" font-weight="600" fill="#0969da">open() -> write() -> ioctl()</text>
+  </g>
+
+  <!-- Flow 1 -> 2 -->
+  <path d="M 266 135 L 305 135" class="flow-arrow" marker-end="url(#arrow)" />
+  <text x="272" y="125" font-family="monospace" font-size="10px" fill="#0969da">VFS</text>
+
+  <!-- Step 2: VFS & Char Device -->
+  <g transform="translate(315, 85)" filter="url(#card-shadow)">
+    <rect width="240" height="100" rx="6" fill="#ffffff" stroke="#2da44e" stroke-width="1.2" />
+    <circle cx="24" cy="24" r="12" fill="#2da44e" />
+    <text x="24" y="28" text-anchor="middle" class="step-num">2</text>
+    <text x="44" y="28" class="box-title" fill="#1a7f37">VFS &amp; Char Device Node</text>
+    <text x="14" y="54" class="box-sub">cdev dispatch on /dev/edu0</text>
+    <text x="14" y="70" class="box-sub">edu_fops table: .read, .write, .ioctl</text>
+    <text x="14" y="86" class="box-sub" font-weight="600" fill="#0969da">copy_from_user / validation</text>
+  </g>
+
+  <!-- Flow 2 -> 3 -->
+  <path d="M 555 135 L 595 135" class="flow-arrow" marker-end="url(#arrow)" />
+  <text x="560" y="125" font-family="monospace" font-size="10px" fill="#0969da">cdev</text>
+
+  <!-- Step 3: Kernel Driver MMIO -->
+  <g transform="translate(605, 85)" filter="url(#card-shadow)">
+    <rect width="240" height="100" rx="6" fill="#ffffff" stroke="#bf8700" stroke-width="1.2" />
+    <circle cx="24" cy="24" r="12" fill="#bf8700" />
+    <text x="24" y="28" text-anchor="middle" class="step-num">3</text>
+    <text x="44" y="28" class="box-title" fill="#7d4e00">Driver MMIO Layer</text>
+    <text x="14" y="54" class="box-sub">void __iomem *regs (ioremap)</text>
+    <text x="14" y="70" class="box-sub">readl() / writel() accessors</text>
+    <text x="14" y="86" class="box-sub" font-weight="600" fill="#bf8700">Memory barriers (mb(), rmb())</text>
+  </g>
+
+  <!-- Downward Flow: Step 3 -> 4 -->
+  <path d="M 725 185 L 725 245" class="flow-arrow-plan" marker-end="url(#arrow-gray)" />
+  <text x="735" y="215" font-family="sans-serif" font-size="11px" fill="#8c959f">Bus Transaction (Planned)</text>
+
+  <!-- Step 4: Physical Bus & Address Space -->
+  <g transform="translate(36, 255)" filter="url(#card-shadow)">
+    <rect width="808" height="75" rx="6" fill="#ffffff" stroke="#8c959f" stroke-width="1.2" stroke-dasharray="4 4" />
+    <circle cx="24" cy="24" r="12" fill="#8c959f" />
+    <text x="24" y="28" text-anchor="middle" class="step-num">4</text>
+    <text x="44" y="28" class="box-title" fill="#57606a">System Bus &amp; Memory Region Mapping (0x20000000 - 0x20000FFF)</text>
+    <text x="14" y="52" class="box-sub">ARM64 physical address decode &#x2022; 4 KiB naturally aligned MMIO window &#x2022; CPU translates virtual address via page tables to physical bus cycle</text>
+  </g>
+
+  <!-- Downward Flow: Step 4 -> 5 -->
+  <path d="M 440 330 L 440 365" class="flow-arrow-plan" marker-end="url(#arrow-gray)" />
+
+  <!-- Step 5: Hardware Registers -->
+  <g transform="translate(36, 375)" filter="url(#card-shadow)">
+    <rect width="808" height="85" rx="6" fill="#ffffff" stroke="#8c959f" stroke-width="1.2" stroke-dasharray="4 4" />
+    <circle cx="24" cy="24" r="12" fill="#8c959f" />
+    <text x="24" y="28" text-anchor="middle" class="step-num">5</text>
+    <text x="44" y="28" class="box-title" fill="#57606a">Target Hardware Registers (QEMU EDU Model Contract)</text>
+    <g transform="translate(14, 42)">
+      <rect x="0" y="0" width="85" height="30" rx="3" fill="#f6f8fa" stroke="#d0d7de" />
+      <text x="42" y="15" text-anchor="middle" font-family="monospace" font-size="10px" font-weight="600">CONTROL</text>
+      <text x="42" y="25" text-anchor="middle" font-family="monospace" font-size="9px" fill="#57606a">0x00</text>
+
+      <rect x="95" y="0" width="85" height="30" rx="3" fill="#f6f8fa" stroke="#d0d7de" />
+      <text x="137" y="15" text-anchor="middle" font-family="monospace" font-size="10px" font-weight="600">STATUS</text>
+      <text x="137" y="25" text-anchor="middle" font-family="monospace" font-size="9px" fill="#57606a">0x04</text>
+
+      <rect x="190" y="0" width="85" height="30" rx="3" fill="#f6f8fa" stroke="#d0d7de" />
+      <text x="232" y="15" text-anchor="middle" font-family="monospace" font-size="10px" font-weight="600">DATA</text>
+      <text x="232" y="25" text-anchor="middle" font-family="monospace" font-size="9px" fill="#57606a">0x08</text>
+
+      <rect x="285" y="0" width="95" height="30" rx="3" fill="#f6f8fa" stroke="#d0d7de" />
+      <text x="332" y="15" text-anchor="middle" font-family="monospace" font-size="10px" font-weight="600">IRQ_STATUS</text>
+      <text x="332" y="25" text-anchor="middle" font-family="monospace" font-size="9px" fill="#57606a">0x0C</text>
+
+      <rect x="390" y="0" width="95" height="30" rx="3" fill="#f6f8fa" stroke="#d0d7de" />
+      <text x="437" y="15" text-anchor="middle" font-family="monospace" font-size="10px" font-weight="600">IRQ_ENABLE</text>
+      <text x="437" y="25" text-anchor="middle" font-family="monospace" font-size="9px" fill="#57606a">0x10</text>
+
+      <rect x="495" y="0" width="85" height="30" rx="3" fill="#f6f8fa" stroke="#d0d7de" />
+      <text x="537" y="15" text-anchor="middle" font-family="monospace" font-size="10px" font-weight="600">VERSION</text>
+      <text x="537" y="25" text-anchor="middle" font-family="monospace" font-size="9px" fill="#57606a">0x14</text>
+
+      <rect x="590" y="0" width="90" height="30" rx="3" fill="#f6f8fa" stroke="#d0d7de" />
+      <text x="635" y="15" text-anchor="middle" font-family="monospace" font-size="10px" font-weight="600">FIFO_LEVEL</text>
+      <text x="635" y="25" text-anchor="middle" font-family="monospace" font-size="9px" fill="#57606a">0x18</text>
+
+      <rect x="690" y="0" width="90" height="30" rx="3" fill="#f6f8fa" stroke="#d0d7de" />
+      <text x="735" y="15" text-anchor="middle" font-family="monospace" font-size="10px" font-weight="600">ERROR_STAT</text>
+      <text x="735" y="25" text-anchor="middle" font-family="monospace" font-size="9px" fill="#57606a">0x1C</text>
+    </g>
+  </g>
+</svg>
